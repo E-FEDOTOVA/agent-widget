@@ -21,21 +21,29 @@
 
   <script>
     const agentId = new URLSearchParams(window.location.search).get('agentId');
-
-    window.addEventListener("load", () => {
-      const startButton = document.getElementById("start-call");
-
-      startButton.addEventListener("click", () => {
-        if (window.Retell && agentId) {
-          Retell.init({
-            agentId: agentId,
-            containerId: "retell-agent"
-          });
-        } else {
-          console.error("Retell SDK not loaded or agentId missing.");
-        }
-      });
-    });
+  
+    // Wait until SDK is loaded, THEN bind click
+    function loadRetellAndInit() {
+      const script = document.createElement('script');
+      script.src = "https://cdn.retellai.com/retell-sdk.js";
+      script.onload = () => {
+        document.getElementById("start-call").addEventListener("click", () => {
+          if (window.Retell && agentId) {
+            Retell.init({
+              agentId: agentId,
+              containerId: "retell-agent"
+            });
+          } else {
+            console.error("Retell SDK not loaded or agentId missing.");
+          }
+        });
+      };
+      script.onerror = () => console.error("Failed to load Retell SDK.");
+      document.head.appendChild(script);
+    }
+  
+    window.addEventListener("load", loadRetellAndInit);
   </script>
+
 </body>
 </html>
