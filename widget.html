@@ -24,7 +24,7 @@
     // Wait until SDK is loaded, THEN bind click
     function loadRetellAndInit() {
       const script = document.createElement('script');
-      script.src = "https://cdn.retellai.com/retell-sdk.js";
+      script.src = "https://cdn.retellai.com/sdk.js";
       script.onload = () => {
         document.getElementById("start-call").addEventListener("click", () => {
           if (window.Retell && agentId) {
