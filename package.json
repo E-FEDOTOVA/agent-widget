@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "retell-sdk": "^4.28.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.14.4"
   }
 }
