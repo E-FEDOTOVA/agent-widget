@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Voice Agent</title>
+  <script src="https://cdn.retellai.com/retell-sdk.js"></script>
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+    #retell-agent { height: 100%; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="retell-agent"></div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const agentId = urlParams.get('agentId');
+
+    Retell.init({
+      agentId: agentId,
+      containerId: "retell-agent"
+    });
+  </script>
+</body>
+</html>
