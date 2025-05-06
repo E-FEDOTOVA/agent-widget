@@ -13,26 +13,29 @@
   <div id="retell-agent"></div>
   <button id="start-call">Start Voice Agent</button>
 
+  <script src="https://cdn.retellai.com/retell-sdk.js"></script>
+</body>
+
+
   <script>
     const agentId = new URLSearchParams(window.location.search).get('agentId');
   
-    function startAgent() {
-      if (typeof Retell !== "undefined") {
-        Retell.init({
-          agentId: agentId,
-          containerId: "retell-agent"
-        });
-      } else {
-        console.error("Retell SDK not loaded.");
-      }
+    function loadRetellSDK(callback) {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.retellai.com/retell-sdk.js';
+      script.onload = callback;
+      document.head.appendChild(script);
     }
   
-    // Wait until SDK script is fully loaded
-    window.addEventListener("load", () => {
-      document.getElementById("start-call").addEventListener("click", startAgent);
+    loadRetellSDK(() => {
+      document.getElementById('start-call').addEventListener('click', () => {
+        Retell.init({
+          agentId,
+          containerId: 'retell-agent'
+        });
+      });
     });
   </script>
 
-</body>
 
 </html>
