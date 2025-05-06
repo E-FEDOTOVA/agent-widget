@@ -11,15 +11,19 @@
 </head>
 <body>
   <div id="retell-agent"></div>
+  <button id="start-call">Start Voice Agent</button>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const agentId = urlParams.get('agentId');
 
-    Retell.init({
-      agentId: agentId,
-      containerId: "retell-agent"
+    document.getElementById('start-call').addEventListener('click', () => {
+      Retell.init({
+        agentId: agentId,
+        containerId: "retell-agent"
+      });
     });
   </script>
 </body>
+
 </html>
