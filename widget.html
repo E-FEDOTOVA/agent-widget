@@ -14,16 +14,25 @@
   <button id="start-call">Start Voice Agent</button>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const agentId = urlParams.get('agentId');
-
-    document.getElementById('start-call').addEventListener('click', () => {
-      Retell.init({
-        agentId: agentId,
-        containerId: "retell-agent"
-      });
+    const agentId = new URLSearchParams(window.location.search).get('agentId');
+  
+    function startAgent() {
+      if (typeof Retell !== "undefined") {
+        Retell.init({
+          agentId: agentId,
+          containerId: "retell-agent"
+        });
+      } else {
+        console.error("Retell SDK not loaded.");
+      }
+    }
+  
+    // Wait until SDK script is fully loaded
+    window.addEventListener("load", () => {
+      document.getElementById("start-call").addEventListener("click", startAgent);
     });
   </script>
+
 </body>
 
 </html>
