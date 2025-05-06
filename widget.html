@@ -18,30 +18,23 @@
   <button id="start-call">Start Voice Agent</button>
   <div id="retell-agent"></div>
 
+  <!-- Load your self-hosted SDK bundle -->
+  <script src="sdk/sdk-entry.js"></script>
+
   <script>
     const agentId = new URLSearchParams(window.location.search).get('agentId');
-  
-    // Wait until SDK is loaded, THEN bind click
-    function loadRetellAndInit() {
-      const script = document.createElement('script');
-      script.src = "https://cdn.retellai.com/sdk.js";
-      script.onload = () => {
-        document.getElementById("start-call").addEventListener("click", () => {
-          if (window.Retell && agentId) {
-            Retell.init({
-              agentId: agentId,
-              containerId: "retell-agent"
-            });
-          } else {
-            console.error("Retell SDK not loaded or agentId missing.");
-          }
+
+    // Initialize Retell directly (now globally available via sdk-entry.js)
+    document.getElementById("start-call").addEventListener("click", () => {
+      if (window.Retell && agentId) {
+        Retell.init({
+          agentId: agentId,
+          containerId: "retell-agent"
         });
-      };
-      script.onerror = () => console.error("Failed to load Retell SDK.");
-      document.head.appendChild(script);
-    }
-  
-    window.addEventListener("load", loadRetellAndInit);
+      } else {
+        console.error("Retell SDK not loaded or agentId missing.");
+      }
+    });
   </script>
 
 </body>
