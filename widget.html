@@ -7,34 +7,35 @@
   <style>
     body { margin: 0; font-family: sans-serif; }
     #retell-agent { height: 100%; width: 100%; }
+    #start-call {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
-  <div id="retell-agent"></div>
   <button id="start-call">Start Voice Agent</button>
-</body>
-
+  <div id="retell-agent"></div>
 
   <script>
     const agentId = new URLSearchParams(window.location.search).get('agentId');
-  
-    function startAgent() {
-      if (typeof Retell !== "undefined") {
-        Retell.init({
-          agentId: agentId,
-          containerId: "retell-agent"
-        });
-      } else {
-        console.error("Retell SDK not loaded.");
-      }
-    }
-  
-    // Wait until SDK script is fully loaded
+
     window.addEventListener("load", () => {
-      document.getElementById("start-call").addEventListener("click", startAgent);
+      const startButton = document.getElementById("start-call");
+
+      startButton.addEventListener("click", () => {
+        if (window.Retell && agentId) {
+          Retell.init({
+            agentId: agentId,
+            containerId: "retell-agent"
+          });
+        } else {
+          console.error("Retell SDK not loaded or agentId missing.");
+        }
+      });
     });
   </script>
-
-
-
+</body>
 </html>
